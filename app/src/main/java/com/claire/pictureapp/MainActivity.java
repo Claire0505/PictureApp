@@ -2,6 +2,7 @@ package com.claire.pictureapp;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,11 +17,14 @@ import android.os.Bundle;
 import android.Manifest;
 import static android.Manifest.permission.*;
 
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements
+                        LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
     //定義一個常數，代表向使用者要求讀取外部儲存裝置辦識值
     private static final int REQUEST_READ_STORAGE = 3;
 
@@ -86,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         grid.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
 
+        //點擊後顯示圖檔，實作項目點擊事件
+        grid.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -106,6 +113,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
+    //實作「onItemClick()」方法
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        //將目前點擊的項目位置放入Intent物件中
+        intent.putExtra("POSITION", position);
+        startActivity(intent);
 
     }
 }
