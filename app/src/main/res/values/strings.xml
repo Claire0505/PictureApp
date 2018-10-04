@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PictureApp</string>
+    <string name="thumbImage">圖片縮圖</string>
+</resources>
